@@ -1,0 +1,58 @@
+1. SELECT * FROM TABLE_NAME;
+해당 테이블의 모든 열을 검색한다.
+*은 모든 것을 의미, 이 자리에 특정한 열 이름을 지정할 수 있다.
+
+2. WHERE절 (조건)
+
+1) SELECT * FROM TABLE_NAME WHERE COLUMN_NAME = '....';
+특정한 컬럼의 내용으로 데이터를 검색한다.
+
+2) SELECT * FROM TABLE_NAME WHERE COLUMN_NAME BETWEEN 1 AND 10;
+어떤 테이블에서 컬럼의 내용이 1~10인 데이터를 검색한다.
+숫자와 같이 연속적인 데이터일 경우에만 사용이 가능하다.
+
+3) SELECT * FROM TABLE_NAME WHERE COLMN_NAME IN ('..','..');
+어떤 테이블에서 컬럼의 내용이 입력한 데이터인 것을 검색한다.
+연속적이지 않은 데이터일 경우 사용한다.
+
+4) SELECT * FROM TABLE_NAME WHERE COLMN_NAME LIKE '김%'
+문자열에 조건을 줄때 사용하며 해당 예는 가장 앞이 '김'이고 나머지 모두를 의미하므로
+성이 '김'인 모든 데이터를 검색한다.
+
+5) SELECT * FROM USERTBL WHERE HEIGHT > 
+(SELECT HEIGHT FROM USERTBL WHERE NAME = '김경호')
+괄호 안에 있는 쿼리를 서브쿼리라고 한다. 이 예제는 김경호의 키 보다 큰 모든 데이터를 검색 하는것
+데이터가 적을 때에는 테이블 전체를 조회하면 된다고 하더라도 어마어마한 양의 데이터베이스는 그렇게
+할 수 없기 때문
+
+6) SELECT * FROM USERTBL WHERE HEIGHT > (SELECT HIGHT FROM USERTBL WHERE ADDR = '경남');
+이 문장은 서브쿼리의 값을 2개 이상 주기 때문에 에러가 난다. 이럴 경우 ANY(SOME) 혹은 ALL로 처리 해주어야 한다.
+SELECT * FROM USERTBL WHERE HEIGHT >= ANY (SELECT HIGHT FROM USERTBL WHERE ADDR = '경남');
+ANY는 서브쿼리의 여러 결과 중 하나만 만족해도 된다는 의미, 만약 서브 쿼리의 결과가 170, 173 이라면 170 이상와 173 이상를 모두 포함하는 결과를 검색한다.
+SELECT * FROM USERTBL WHERE HEIGHT > ALL (SELECT HIGHT FROM USERTBL WHERE ADDR = '경남');
+ALL은 서브쿼리의 여러 결과 중 모두 만족해야 하는 것을 의미, 위의 예를 들면 170 이상, 173 이상의 교집합은 173이상이므로 173이상의 결과만 검색한다.
+
+3. ORDER BY 절
+
+1) SELECT * FROM USERTBL ORDER BY HEIGHT;
+기본적으로 오름차순(ASCENDING)이다. 키를 오름차순으로 정렬하기
+
+2) SELECT * FROM USERTBL ORDER BY HEIGHT DESC;
+내림차순(DESCENDING)으로 정렬하기
+
+3) ORDER BY절은 여러가지 조건 절이 온다면 가장 마지막에 와야한다..
+
+4. DISTINCT
+중복된 데이터를 제거하거 하나씩만 남기기
+
+SELECT DISTINCT ADDR FROM USERTBL;
+이 경우 ADDR(주소)가 여러개 있으면 그 중에 하나씩만 골라서 출력해준다. 
+
+5. LIMIT
+출력 수를 제한하는 것
+
+SELECT * FROM EMPLOYEES LIMIT 100;
+해당 테이블에서 1000개까지만 검색한다.
+
+
+

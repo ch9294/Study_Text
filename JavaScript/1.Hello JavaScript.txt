@@ -1,0 +1,15 @@
+[html file]
+<!DOCTYPE html>
+<html lang = "ko">
+<head>
+<meta charset="utf-8">
+<script src = "파일 이름"></script> => html 파일에 자바 스크립트 파일을 등록
+</head>
+<body>
+Hello world!!!
+</body>
+</html>
+
+
+[Java Script file]
+alert("hello java script"); => 경고창을 띄우는 함수
