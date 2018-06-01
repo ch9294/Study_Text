@@ -1,0 +1,12 @@
+CREATE(생성)문
+
+1. CREATE TABLE TABLE_NAME(....);
+테이블을 생성하기 위한 쿼리문 괄호 안에는
+(COULMN_NAME, DATA_TYPE, NULL or NOT NULL, AUTO_INCREMENT, KEY설정)
+AUTO_INCREMENT가 설정되었을 경우 해당 열은 반드시 기본키 혹은 유니크로 지정해야함
+
+2. ALTER TABLE TABLE_NAME AUTO_INCREMENT = ??;
+AUTO_INCREMENT의 시작점을 지정할 수 있음.
+
+3. SET @@ AUTO_INCREMENT_INCREMENT = ??;
+증가값을 설정한다.(서버측 변수이기 때문에 모든 테이블에 적용됨)

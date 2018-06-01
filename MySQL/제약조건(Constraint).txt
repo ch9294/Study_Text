@@ -1,0 +1,56 @@
+모든 열의 정의를 끝내 놓고 제약 조건을 만들때 사용하는 방법이다.
+CONSTRAINT (KEY_NAME) CONSTRAINT_KEY(COLUMN_NAME)
+
+1. PRIMARY KEY (기본키)제약 조건
+테이블 내에서 각 열을 구분하는 유일한 식별자
+중복과 NULL을 허용하지 않는다.
+테이블 생성하면서 열을 정의 할 때 PRIMARY KEY라고 적어주면 그 열은 유일한 식별자가 됨
+테이블을 생성한 후에 별도로 이 제약 조건을 지정해주고자 한다면,
+ALTER TABLE TABLE_NAME ADD CONSTRAINT PRI_KEY_NAME PRIMARY KEY(COLUMN_NAME);
+
+기본키는 테이블에 하나 이상의 열에 지정해 줄 수 있다. 복수의 열을 지정해 준다는 것은 각각의 열을 
+기본 키로 지정하는 것이 아닌 각 열을 합쳐서 지정한다는 것이다.( 기본키는 각 테이블당 반드시 하나(!!)만 존재함)
+ALTER TABLE TABLE_NAME ADD CONSTRAINT PRI_KEY_NAME PRIMARY KEY(COLUMN_NAME1,COULMN_NAME2);
+
+2. FORIGNE KEY (외래키)제약 조건
+두 테이블 사이에 관계를 맺어주면서 데이터 무결성을 보장해주는 제약 조건이다.
+외래키가 설정된 테이블을 외래키 테이블, 외래키에 의해 참조되는 테이블을 기준테이블이라고 한다.
+외래키 테이블은 기준 테이블에 의존성을 가지게 된다. 이 말은 기준 테이블에 있는 데이터에 한해서만 테이블의 데이터를 입력,수정 할 수있다.
+기준 테이블에서 참조하는 열은 반드시 PRIMARY KEY 혹은 UNIQUE이여야 한다!!!!
+
+CONSTRAINT (FOR_KEY_NAME) FORIGNE KEY(COLUMN_NAME) REFERENCES BASE_TABLE(COLUMN_NAME);
+
+ALTER TABLE TABLE_NAME ADD CONSTRAINT (FOR_KEY_NAME) FORIGNE KEY(COLUMN_NAME) REFERENCES BASE_TABLE(COLUMN_NAME);
+
+외래키 설정할 때 ON DELETE CASCADE 와 ON UPDATE CASCADE가 있다. 이것은 기준 테이블에서 참조하고 있는 열의 정보가 변경 되었을 경우 자동적으로
+같이 변경됨을 설정한다. 아무것도 설정하지 않으면 ON DELETE NO ACTION, ON UPDATE NO ACTION이 적용되어 기준 테이블에서 변경사항이 생겨도 아무런
+변화도 일어나지 않는다.
+
+3. UNIQUE 제약 조건
+중복이 될 수 없는 유일한 값을 입력해야 한다. PRIMARY KEY와의 차이점은 바로 NULL 값의 허용이다
+즉, 중복이 되지 않으면서 값을 입력하지 않는 것을 허용한다는 것이다.
+유일해야 하면서도 중복이 되지 말아야 하는 것 중에는 이메일이 있다.
+
+CREATE TABLE memberTBL(
+userid varchar(10) PRIMARY KEY,
+name char(5) not null,
+email varchar(10),
+CONSTRAINT uniq_email UNIQUE(email));
+
+4. DEFAULT 정의
+데이터를 삽입할 때, 어떤 데이터를 입력하지 않을 경우 기본적으로 프로그래머가 설정한 값을
+자동적으로 입력해주는 제약 조건이다.
+
+CREATE TABLE memberTBL(
+userid varchar(10) PRIMARY KEY,
+name char(5) DEFAULT '아무개'
+email varchar(10),
+CONSTRAINT uniq_email UNIQUE(email));
+
+이 경우에 name에 값을 입력할 경우 비어 놓으면 자동적으로 '아무개'가 입력됨
+테이블을 생성할 때 DEFAULT를 설정할 수도 있고, 나중에 제약 조건을 추가 할 수도 있다.
+
+ALTER TABLE memberTBL ALTER COLUMN name SET DEFAULT '아무개'
+
+5. NULL 제약 조건
+NULL과 NOT NULL의 설정

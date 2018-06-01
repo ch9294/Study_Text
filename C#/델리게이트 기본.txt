@@ -1,0 +1,40 @@
+델리게이트(Delegate)
+
+1. 정의
+사전적인 의미로는 '대리자'이다. 컴퓨터 공학적으로는 C#에서 콜백함수를 만들기 위해 사용된다.
+메소드를 참조하는 객체를 만든다고 생각하자.
+
+2. 문법
+
+2-1. 선언문
+delegate RETURN_TYPE METHOD_NAME(Parameter...);
+
+2-2. 사용
+
+DELEGATE_NAME INSTANCE_NAME;
+
+클래스 객체를 만드는 것과 동일하다. 만들어 놓은 델리게이트 이름을 타입으로 생각하고 인스턴스 이름을 적어주면 된다.
+
+Ex)
+
+delegate int MyDelegate(int num1, int num2);
+
+MyDelegate del = new MyDelegate();
+
+인스턴스에 메소드를 참조하기 위해서는 델리게이트 선언 때의 리턴타입과 파라미터가 동일한 메소드만 참조가 가능하다.
+즉 예에서는 리턴타입이 int이고 입력 파라메터가 int타입이 두 개인 모든 메소드는 del에 메소드 참조가 가능해진다.
+
+int Sum(int a, int b){
+return a+b;
+}
+이런 메소드가 있다고 가정하면 여러가지 방법으로 이 메소드를 참조하게 할 수 있다.
+
+1) del = new MyDelegate(Sum);
+2) del = Sum;
+3) del += Sum;
+
+이 세가지가 모두 가능하다(다만 = 과 +=은 미묘한 차이가 있다. 델리게이트 체인에서 확인!!)
+
+호출하는 방법도 여러가지가 있다.
+1. del.invoke(1,2); // 정석적으로 사용하는 방법
+2. del(1,2); // 가장 많이 사용하는 방법이다.

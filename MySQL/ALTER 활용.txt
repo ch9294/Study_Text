@@ -1,0 +1,42 @@
+테이블이 이미 만들어진 상태에서 테이블의 구조를 변경할 수 있는 명령어이다.
+열의 삽입, 수정, 삭제가 가능하며 제약 조건의 추가 및 변경, 삭제도 가능하다.
+
+1. 열 추가 하기
+
+ALTER TABLE TABLE_NAME ADD COLUMN_NAME DATETYPE CONSTRAINT_KEY;
+
+추가하고자 하는 열의 이름과 그 열의 데이터 타입, 제약 조건을 입력함.
+EX) ALTER TABLE usertbl ADD homepage varchar(30) default 'www.naver.com';
+usertbl에 homepage라는 열을 추가하는데 그 열의 데이터 타입이 varchar, 제약 조건 default가 추가됨.
+기본적으로 가장 마지막 열로 추가가 됨. 원하는 위치가 있다면 마지막에 FIRST, AFTER COLUMN_NAME으로 위치 설정가능
+
+2. 열의 삭제
+
+ALTER TABLE TABLE_NAME DROP COLUMN COLUMN_NAME;
+
+3. 열의 이름 및 데이터 타입 변경
+
+ALTER TABLE TABLE_NAME CHANGE COLUMN OLD_NAME NEW_NAME DATATYPE CONSTRAINT_KEY;
+
+4. 제약 조건 추가하기
+
+ALTER TABLE TABLE_NAME ADD CONSTRAINT KEY_NAME PRIMARY KEY(COLUMN_NAME); 기본키 추가하기
+ALTER TABLE TABLE_NAME ADD CONSTRAINT KEY_NAME FOREIGN KEY (COLUMN_NAME) REFERENCES TABLE_NAME(COLUMN_NAME); 외래키 추가하기
+
+기본 키의 경우 테이블에 단 하나만 존재하기 때문에 별도로 이름을 지어줄 필요는 없음.
+외래 키의 경우 1개 이상이 될 수 있기 때문에 이름을 붙여 관리하는 것이 좋다.
+
+SHOW KEYS FROM TABLE_NAME => 테이블에 있는 제약 조건을 확인 할 수 있다.
+
+외래키의 경우 기준 테이블의 내용이 변경 되면 외래 키 테이블의 데이터도 같이 변경 혹은 삭제가 될 수 있게 설정할 수 있다.
+일단 기존에 있던 외래 키를 삭제한다. 그리고 ON UPDATE CASCADE(변경),ON DELETE CASCADE(삭제)조건을 마지막에 붙여준다.
+
+Ex) ALTER TABLE TABLE_NAME ADD CONSTRAINT KEY_NAME FOREIGN KEY (COLUMN_NAME) 
+REFERENCES TABLE_NAME(COLUMN_NAME) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+5. 제약 조건 삭제하기
+ALTER TABLE TABLE_NAME DROP PRIMARY KEY(FOREIGN KEY) KEY_NAME;
+테이블에 제약 조건이 사라진다. 키 자체는 살아 있음 하지만 그 키가 가진 조건이 기본(외래)키 인지 확인이 불가하며 또 아니다.
+
+

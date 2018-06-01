@@ -1,0 +1,19 @@
+INSERT(삽입)문
+
+ 1. INSERT INTO TABLE_NAME VALUES(...);
+괄호 안에는 열의 이름과 데이터형식에 맞게 작성해야함. 열의 위치를 맞추어야함.
+만약에 원하는 열에만 데이터를 입력하고 싶다면 테이블 이름에 입력하고자 하는 열을 따로 지정해주
+어야한다.
+
+ex) INSERT INTO TABLE_NAME(COLUMN_NAME,...) VALUES(...);
+
+INSERT 사용시 기본키가 중복되어있다면??
+
+INSERT IGNORE INTO TABLE_NAME VALUES(.......);
+mysql에서 100개의 데이터를 삽입하는 작업을 한다고 가정한다.
+만약 100개 중에서 1개가 기본키 중복으로 인해 오류가 발생한다면 나머지 99개의 작업도 모두 취소가 된다.
+이러한 경우를 미연에 방지하기 위해 ignore를 사용하여 중복 오류가 나는 삽입문만 작업에서 제외할 수 있도록한다.
+
+INSERT IGNORE INTO TABLE_NAME VALUES(.......) ON DUPLICATE KEY UPDATE .....;
+기본키가 중복되었을 경우 삽입하려던 입력값이 아닌 차선책으로 준비한 값을 집어 넣는다.
+

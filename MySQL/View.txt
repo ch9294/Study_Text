@@ -1,0 +1,8 @@
+1.ºä ¸¸µé±â
+CREATE VIEW VIEW_NAME AS (SELECT ......);
+
+2.ºä »èÁ¦
+DROP VIEW VIEW_NAME;
+
+3.ºä »ý¼º È¤Àº µ¤¾î¾²±â
+CREATE OR REPLACE VIEW VIEW_NAME AS (SELECT .....);
